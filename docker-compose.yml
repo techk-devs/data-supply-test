@@ -1,0 +1,21 @@
+version: '2'
+services:
+  postgres:
+    build:
+      dockerfile: ./docker/postgres/Dockerfile
+      context: .
+    ports:
+      - 5433:5432
+
+  web:
+    build:
+      dockerfile: ./docker/web/Dockerfile
+      context: .
+    volumes:
+      - .:/futurama
+    depends_on:
+      - postgres
+    ports:
+      - 8001:8001
+    # command: bash -c "pip install -r requirements.txt"
+    tty: true
